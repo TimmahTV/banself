@@ -2,23 +2,23 @@
  "output_file": "settings.json",
   "Command": {
     "type": "textbox",
-    "value": "!command",
+    "value": "!banself",
     "label": "Command",
-    "tooltip": "popup for hovering over",
-    "group": "organized in this group"
+    "tooltip": "To ban yourself lmao",
+    "group": "BanSelf"
   },
   "ResponseMessage": {
     "type": "textbox",
-    "value": "the response message sent to chat",
+    "value": "works PogChamp",
     "label": "Response",
-    "tooltip": "popup for hovering over",
-    "group": "organized in this group"
+    "tooltip": "To ban yourself lmao",
+    "group": "BanSelf"
   },
   "ErrorMessage": {
     "type": "textbox",
-    "value": "Error Message",
+    "value": "fails DansGame",
     "label": "Error Response",
-    "tooltip": "popup for hovering over",
-    "group": "organized in this group"
+    "tooltip": "To ban yourself lmao",
+    "group": "BanSelf"
   }
 }

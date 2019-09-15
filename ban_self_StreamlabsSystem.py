@@ -8,11 +8,11 @@ import re
 #---------------------------------------
 # [Required] Script information
 #---------------------------------------
-ScriptName = "boilerplate" #Change this
+ScriptName = "Ban Self"
 Website = "https://www.twitch.tv/Timmah_TV"
 Creator = "Timmah_TV"
 Version = "1.0.0"
-Description = "description" #Change this
+Description = "Purge yourself from chat"
 #---------------------------------------
 # Versions
 #---------------------------------------
@@ -87,9 +87,15 @@ def Init():
 
 def Execute(data):
     if data.IsChatMessage():
-        sendMessage = Parent.SendTwitchMessage if data.IsFromTwitch() else Parent.SendDiscordMessage
-        if data.GetParam(0).lower() == Command: #Change this
-            # Where we process the command
+        if data.IsFromTwitch():
+            #Parent.SendTwitchMessage("the real message: " + data.Message + " , and the get param message: " + data.GetParam(0).lower() + " , and the Command: " + Command)
+            if data.GetParam(0).lower() == Command:
+                #Parent.SendTwitchMessage("do something")
+                Parent.SendTwitchMessage("/timeout " + data.UserName + " 1")
+        elif data.IsFromDiscord():
+            if data.GetParam(0).lower() == Command:
+                Parent.SendDiscordMessage("do something")
+                #Parent.SendDiscordMessage("/timeout " + data.UserName + " 1")
     return
 
 
