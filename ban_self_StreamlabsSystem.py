@@ -5,6 +5,7 @@ import codecs
 import json
 import os
 import re
+import math
 #---------------------------------------
 # [Required] Script information
 #---------------------------------------
@@ -39,6 +40,7 @@ class Settings:
             self.Command = "command" #Change this
             self.ResponseMessage = "Response Message" #Change this
             self.ErrorMessage = "Error Message" #Change this
+            self.Storage = "{}"
 
     # Reload settings on save through UI
     def ReloadSettings(self, data):
@@ -86,19 +88,34 @@ def Init():
 
 
 def Execute(data):
+    SendMessage = Parent.SendTwitchMessage if data.IsFromTwitch() else Parent.SendDiscordMessage
     if data.IsChatMessage():
-        if data.IsFromTwitch():
-            #Parent.SendTwitchMessage("the real message: " + data.Message + " , and the get param message: " + data.GetParam(0).lower() + " , and the Command: " + Command)
-            if data.GetParam(0).lower() == Command:
-                #Parent.SendTwitchMessage("do something")
-                Parent.SendTwitchMessage("/timeout " + data.UserName + " 1")
-        elif data.IsFromDiscord():
-            if data.GetParam(0).lower() == Command:
-                Parent.SendDiscordMessage("do something")
-                #Parent.SendDiscordMessage("/timeout " + data.UserName + " 1")
+        if data.GetParam(0).lower() == Command:
+            jsonstorage = json.loads(MySettings.Storage)
+            storeUser(jsonstorage, data.UserName)
+            #Parent.SendTwitchMessage("do something")
+            theNumber = jsonstorage[data.UserName]
+            theAmount = str(math.pow(theNumber, theNumber)).replace(".0", "")            
+            SendMessage("/timeout " + data.UserName + " " + theAmount)
+
+            MySettings.Storage = json.dumps(jsonstorage)
     return
 
 
 def Tick():
     """Required tick function"""
     return
+
+
+# Store the candy
+def storeUser(storage, username):
+    try:
+        storage[username] = storage[username] + 1
+        result = Parent.GetRandom(0, storage[username])
+
+        if result - 1 > 10:
+            storage[username] = 1
+        elif Parent.GetRandom(0, 2) == 0:
+            storage[username] = 1
+    except:
+        storage[username] = 1

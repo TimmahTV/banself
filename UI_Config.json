@@ -20,5 +20,12 @@
     "label": "Error Response",
     "tooltip": "To ban yourself lmao",
     "group": "BanSelf"
-  }
+  },
+  "Storage": {
+    "type": "textbox",
+    "value": "{}",
+    "label": "banself's storage",
+    "tooltip": "lmao banself",
+    "group": "BanSelf"
+  },
 }
